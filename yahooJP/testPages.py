@@ -2,6 +2,7 @@ import unittest
 from yahooJP.pages import *
 from selenium import webdriver
 
+
 class TestPages(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
