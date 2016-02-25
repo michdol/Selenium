@@ -6,7 +6,7 @@ from yahooJP.users import get_password, get_email
 
 class MainPage(Page):
     def check_page_loaded(self):
-        return True if (self.find_element(*MainPageLocators.HEADER)) else False
+        return self.find_element(*MainPageLocators.HEADER)
 
     def go_to_mail_page(self):
         self.find_element(*MainPageLocators.MAIL).click()
@@ -20,7 +20,7 @@ class MainPage(Page):
         sleep(1)
         searchbutton.click()
         results_search_bar = self.wait_for_element(*SearchResultsPageLocators.SEARCHBAR)
-        return True if (results_search_bar.get_attribute('value') == term) else False
+        return results_search_bar.get_attribute('value') == term
 
 
 class SearchResultPage(Page):
@@ -37,7 +37,7 @@ class SearchResultPage(Page):
 
 class LoginPage(Page):
     def check_page_loaded(self):
-        return True if (self.find_element(*LoginPageLocators.HEADER)) else False
+        return self.find_element(*LoginPageLocators.HEADER)
 
     def enter_email(self, name):
         self.driver.find_element(*LoginPageLocators.EMAIL).send_keys(get_email(name))
@@ -66,11 +66,11 @@ class LoginPage(Page):
 
 class MailPage(Page):
     def check_page_loaded(self):
-        return True if (self.find_element(*MailPageLocators.HEADER)) else False
+        return self.find_element(*MailPageLocators.HEADER)
 
     def log_out(self):
         self.find_element(*MailPageLocators.LOGOUT).click()
-        return True if(self.wait_for_element(*MailPageLocators.CONFIRMLOGOUT)) else False
+        return self.wait_for_element(*MailPageLocators.CONFIRMLOGOUT)
 
     def get_emails(self):
         emails_list = self.find_element(*MailPageLocators.EMAILS)
