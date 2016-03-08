@@ -45,6 +45,22 @@ class TestPages(unittest.TestCase):
         search_result_page.go_to_result()
         search_result_page.get_contributors_names()
 
+    # Again login with valid and invalid user but using excel for storing data
+
+    def test_excel_login_valid(self):
+        page = MainPage(self.driver)
+        login_page = LoginPage(self.driver)
+        mail_page = MailPage(self.driver)
+        page.go_to_mail_page()
+        login_page.excel_login('Michal')
+        self.assertTrue(mail_page.log_out())
+
+    def test_excel_login_invalid(self):
+        page = MainPage(self.driver)
+        login_page = LoginPage(self.driver)
+        page.go_to_mail_page()
+        self.assertTrue(login_page.excel_login_invalud_user('Invalid'))
+
     def tearDown(self):
         self.driver.quit()
 

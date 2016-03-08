@@ -2,6 +2,7 @@ from yahooJP.base import Page
 from yahooJP.locators import *
 from time import sleep
 from yahooJP.users import get_password, get_email
+from yahooJP.excel_users import excel_get_email, excel_get_password
 
 
 class MainPage(Page):
@@ -59,6 +60,29 @@ class LoginPage(Page):
     def login_invalid_user(self, name):
         self.enter_email(name)
         self.enter_password(name)
+        sleep(1)
+        self.click_login()
+        return self.check_element_exists(*LoginPageLocators.FAILEDLOGIN)
+
+    # Same methods for login as above but using excel for storing data
+
+    def excel_enter_email(self, name):
+        self.driver.find_element(*LoginPageLocators.EMAIL).send_keys(excel_get_email(name))
+
+    def excel_enter_password(self, name):
+        self.driver.find_element(*LoginPageLocators.PASSWORD).send_keys(excel_get_password(name))
+
+    def excel_login(self, name):
+        self.excel_enter_email(name)
+        self.excel_enter_password(name)
+        sleep(1)
+        self.click_login()
+        self.wait_for_element(*MailPageLocators.HEADER)
+        return MailPage(self.driver)
+
+    def excel_login_invalud_user(self, name):
+        self.excel_enter_email(name)
+        self.excel_enter_password(name)
         sleep(1)
         self.click_login()
         return self.check_element_exists(*LoginPageLocators.FAILEDLOGIN)
