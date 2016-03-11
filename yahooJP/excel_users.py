@@ -7,7 +7,6 @@ sheet = workbook.sheet_by_index(0)
 
 data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(1, sheet.nrows)]
 
-print(sorted(data, reverse=True))
 
 
 def excel_get_email(name):
@@ -20,5 +19,3 @@ def excel_get_password(name):
     for i in data:
         if name == i[1]:
             return i[4]
-
-print(excel_get_email('Michal'))
